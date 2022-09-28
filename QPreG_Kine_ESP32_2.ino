@@ -89,9 +89,7 @@ void renderBatteryLevelAndQuadPie() {
   tft.drawText(60, 3, String (now.day()) + "/" + String (now.month()) + "/" + String (now.year()) + "");
 
   //Need to fix for leading zeros
-  tft.drawText(63, 13, now.hour() < 12  ? String(now.hour()) + ":" + String (now.second()) + " AM " :
-               ( now.hour() == 12 ? String(now.hour()) + ":" + String (now.minute()) + " PM " :
-                 String(now.hour() - 12 ) + ":" + String (now.minute()) + ":" + String (now.second()) + "PM "));
+  tft.drawText(63, 13, String(now.hour()%12) + ":" + String (now.minute()) + ":" + String (now.second()) + " " + (now.isPM()? "PM" : "AM"));
 
   batt = 60; //constrain(map(analogRead (27) , 2200, 2300, 0, 100 ), 0, 100); // Li-Ion battery should have minimum of 3.6V and a max of 4.2v to run Quadmastest.
   // 3.6V corresponds to 655 digital and 4.2v to 880.
