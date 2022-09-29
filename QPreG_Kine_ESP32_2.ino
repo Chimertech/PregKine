@@ -40,6 +40,10 @@ const int tempTarget =  100, tempMin =  120, timerLimit = 10, buzzerKZ = 500 ; /
 const char daysOfTheWeek[7][12] = {"Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"};
 unsigned long startSecs = 0;
 
+String getZeroPaddedString(int no) {
+    return (no<10?"0":"") + String(no);
+}
+
 bool isRTCTimeOlderThanCompileTime(DateTime rtcTime , DateTime compileTime) {
   Serial.println("RTC Time " + rtcTime.timestamp());
   Serial.println("Compile Time " + compileTime.timestamp());
@@ -89,7 +93,8 @@ void renderBatteryLevelAndQuadPie() {
   tft.drawText(60, 3, String (now.day()) + "/" + String (now.month()) + "/" + String (now.year()) + "");
 
   //Need to fix for leading zeros
-  tft.drawText(63, 13, String(now.hour()%12) + ":" + String (now.minute()) + ":" + String (now.second()) + " " + (now.isPM()? "PM" : "AM"));
+  tft.drawText(63, 13, getZeroPaddedString(now.hour()%12) + ":" + getZeroPaddedString (now.minute()) +
+                 ":" + getZeroPaddedString (now.second()) + " " + (now.isPM()? "PM" : "AM"));
 
   batt = 60; //constrain(map(analogRead (27) , 2200, 2300, 0, 100 ), 0, 100); // Li-Ion battery should have minimum of 3.6V and a max of 4.2v to run Quadmastest.
   // 3.6V corresponds to 655 digital and 4.2v to 880.
